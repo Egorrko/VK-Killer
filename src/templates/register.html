@@ -5,25 +5,27 @@ Register page
 
 
 {% block body %}
-<section class="auth_form">
-    <h2>Welcome to the club, buddy!</h2>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form.username}}
-        {{form.email}}
-        {{form.password1}}
-        {{form.password2}}
-        <input type="submit" value="Register">
-    </form>
-    {% if form.errors %}
-    <div class="error">
-        {% for field in form %}
-            {% for error in field.errors %}
-                <strong>{{ error|escape }}</strong><br>
+    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <h2>Welcome to the club, buddy!</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="d-inline-flex flex-column">
+                <div class="p-2">{{form.username}}</div>
+                <div class="p-2">{{form.email}}</div>
+                <div class="p-2">{{form.password1}}</div>
+                <div class="p-2">{{form.password2}}</div>
+                <button type="submit" class="btn btn-primary align-self-center">Submit</button>
+            </div>
+        </form>
+        {% if form.errors %}
+        <div class="d-inline-flex flex-column">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <strong>{{ error }}</strong>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </div>
+        {% endif %}
+        <p>Already have an account? <a href="../login">Log in</a> now!</p>
     </div>
-    {% endif %}
-    <p>Already have an account? <a href="../login">Log in</a> now!</p>
-</section>
 {% endblock %}

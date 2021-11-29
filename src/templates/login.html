@@ -5,21 +5,21 @@ Login page
 
 
 {% block body %}
-<section class="auth_form">
-    <h2>Welcome to the club, buddy!</h2>
+<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <h2>Welcome back, buddy!</h2>
     <form method="POST" action="">
         {% csrf_token %}
-        {{form.username}}
-        {{form.password}}
-        <input type="submit" value="Login">
+        <div class="d-inline-flex flex-column">
+            <div class="p-2">{{form.username}}</div>
+            <div class="p-2">{{form.password}}</div>
+            <button type="submit" class="btn btn-primary align-self-center">Submit</button>
+        </div>
     </form>
     {% if messages %}
-    <p class="error">
-        {% for msg in messages %}
+    {% for msg in messages %}
         <a>{{msg}}</a>
-        {% endfor %}
-    </p>
+    {% endfor %}
     {% endif %}
     <p>Don't have an account? <a href="../register">Register</a> now!</p>
-</section>
+</div>
 {% endblock %}
