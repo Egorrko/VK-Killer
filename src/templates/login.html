@@ -10,9 +10,9 @@ Login page
     <form method="POST" action="">
         {% csrf_token %}
         <div class="d-inline-flex flex-column">
-            <div class="p-2">{{form.username}}</div>
-            <div class="p-2">{{form.password}}</div>
-            <button type="submit" class="btn btn-primary align-self-center">Submit</button>
+            <div class="pb-2">{{form.username}}</div>
+            <div class="pb-2">{{form.password}}</div>
+            <button type="submit" class="btn btn-primary align-self-center">Login</button>
         </div>
     </form>
     {% if messages %}

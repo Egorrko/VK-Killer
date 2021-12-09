@@ -34,5 +34,6 @@ def _get_last_message(dm: Dm) -> Message:
 
 def _get_dm_user(user: Account, dm: Dm) -> Account:
     print(dm.users.all())
-    for u in dm.users.all():
-        if u != user: return u
+    for u in dm.users.all().filter(dm__users=user):
+        if u != user:
+            return u

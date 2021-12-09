@@ -34,13 +34,11 @@ def get_messages(dm: Dm, last_msg_id: int) -> list[Message]:
     Если last_msg_id == -1, последних 30, иначе - сообщений с id меньше чем last_msg_id
     (подгрузка более старых сообщений)
     '''
-    num = 20  # Количество сообщений загружаемых за раз
+    num = 30  # Количество сообщений загружаемых за раз
     msgs = Message.objects.filter(dm=dm).order_by('-id')
     if last_msg_id > 0:
         msgs = msgs.filter(id__lt=last_msg_id)
-    else:
-        num = 30
-    if len(msgs) < num: num = len(msgs)
+    num = min(len(msgs), num)
 
     return msgs[:num]
 

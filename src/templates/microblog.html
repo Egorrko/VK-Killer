@@ -1,25 +1,41 @@
 {% load static %}
-<div style="overflow-y: scroll; height:700px; width: 100%" id="posts-box">
-    <table>
-        {% for post in posts %}
-            <table>
-                <tr>
-                    <th rowspan="2"><img class="avatar small" src="{{post.user.avatar}}"></th>
-                    <th>{% if post.image %}<img class="post-image" src="{{post.image.url}}">{% endif %}</th>
-                </tr>
-                <tr>
-                    <th><a>{{post.message}} </a><a class="timestamp">{{post.time}}</a></th>
-                    <th>
-                        <form method="POST" action="">
-                            {% csrf_token %}
-                            <button type="submit" name="action" value="like_{{post.id}}">
-                                <img class="avatar tiny" src="{% static 'images/like' %}{% if user in post.likes %}_pressed{% endif %}.png">
-                            </button>
-                        </form>
-                        <a class="nickname-small">Likes</a> {{ post.likes|length }}
-                    </th>
-                </tr>
-            </table>
-        {% endfor %}
-    </table>
+<div class="container">
+    {% for post in posts %}
+    <div class="row">
+        <div class="col mb-2">
+            <div class="card">
+                 <div class="card-body">
+                     <div class="card-title row justify-content-between align-content-center">
+                         <a class="col-4 row" href="{{ post.user.url }}">
+                             <div class="col-3">
+                                <img class="img-fluid rounded" src="{{post.user.avatar}}">
+                             </div>
+                             <div class="col-4">
+                                <p class="card-title">{{ post.user.username }}</p>
+                                <p class="text-secondary">{{post.time}}</p>
+                             </div>
+                         </a>
+                         <div class="col-1">
+                             <form method="POST" action="">
+                                {% csrf_token %}
+                                 <button class="btn btn-light" name="action" value="like_{{post.id}}">
+                                     <img class="img-fluid" src="{% static 'images/like' %}{% if user in post.likes %}_pressed{% endif %}.png"/>
+                                     {{ post.likes|length }}
+                                 </button>
+                             </form>
+                         </div>
+                     </div>
+                    <div class="col-12">
+                        <p class="card-text">{{post.message}}</p>
+                    </div>
+                    {% if post.image %}
+                        <div class="col-12">
+                            <img class="post-image" src="{{post.image.url}}">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>

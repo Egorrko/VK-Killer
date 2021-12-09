@@ -1,16 +1,16 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar bg-dark">
     <div class="container">
-        <div class="d-flex">
-            <li class="nav-item px-2">
-                <a class="navbar-link" href="/profile">Мой профиль</a>
-            </li>
-            <a class="navbar-link" href="/dm">Сообщения</a>
-            <a class="navbar-link" href="/friends">Друзья</a>
-            <a class="navbar-link" href="/search">Поиск</a>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto justify-content-center mb-md-0">
+              <li><a href="/profile" class="nav-link px-2 text-white">Мой профиль</a></li>
+              <li><a href="/dm" class="nav-link px-2 text-white">Сообщения</a></li>
+              <li><a href="/friends" class="nav-link px-2 text-white">Друзья</a></li>
+              <li><a href="/search" class="nav-link px-2 text-white">Поиск</a></li>
+            </ul>
         </div>
-        <div class="text-end">
-            <a class="navbar-brand">Hello, {{user}}</a>
-            <a class="navbar-brand" href="/logout">Выйти</a>
-        </div>
+        <ul class="nav text-end">
+            <li><a class="nav-link px-2 text-white">Hello, {{user}}</a></li>
+            <li><a href="/logout" class="nav-link px-2 text-white" >Выйти</a></li>
+        </ul>
     </div>
 </nav>

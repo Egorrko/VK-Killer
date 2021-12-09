@@ -20,7 +20,7 @@ def get_all(user: int) -> list[Post]:
              'message': p.message,
              'image': p.image,
              'time': time.strftime("%H:%M", p.timestamp.timetuple()),
-             'likes': p.likes.all()} for p in Post.objects.filter(user=user)]
+             'likes': p.likes.all()} for p in Post.objects.filter(user=user).order_by('-id')]
 
 
 def create(request) -> bool:

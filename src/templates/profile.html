@@ -6,64 +6,63 @@
 
 
 {% block body %}
-{% include "navbar.html" %}
-
-<table style="width: 100%">
-    <tr>
-        <th rowspan="2">
-            <table>
-                <tr><th><h3>{{profile_user}}</h3><br></th></tr>
-                <tr><th><img class="avatar" src="{{profile_user.avatar.url}}"></th></tr>
-                {% if not profile_user == user and user.is_authenticated %}
-                    <tr><th><a href="/dm/{{profile_user.id}}"><button>Написать сообщение</button></a></th></tr>
-                    <tr><th>
-                    {% if not user in offer_accepted_users %}
-                        <form method="POST" action="">
-                            {% csrf_token %}
-                            <button type="submit" name="action" value="add_friend">Добавить в друзья</button>
-                        </form>
-                        </th></tr>
-                        <tr><th>
-                        {% if profile_user in offer_accepted_users %}
-                            <small>Пользователь подписан на вас</small>
-                        {% endif %}
-                    {% elif profile_user in offer_accepted_users %}
-                        <small>Пользователь у вас в друзьях</small>
-                    {% else %}
-                        <small>Заявка в друзья отправлена</small>
+    <div class="row">
+        <div class="col-2 bg-gray">
+            <h2 class="mx-2">{{profile_user}}</h2>
+            <img src="{{profile_user.avatar.url}}" class="rounded img-fluid mt-2" alt="{{profile_user}}">
+            {% if not profile_user == user and user.is_authenticated %}
+            <a href="/dm/{{profile_user.id}}" class="btn btn-secondary mt-2 w-100">Написать сообщение</a>
+                {% if not user in offer_accepted_users %}
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <button type="submit" name="action" value="add_friend" class="btn btn-secondary mt-2 w-100">Добавить в друзья</button>
+                    </form>
+                    {% if profile_user in offer_accepted_users %}
+                        <p class="text-secondary text-center">Пользователь подписан на вас</p>
                     {% endif %}
-                    </th></tr>
+                {% elif profile_user in offer_accepted_users %}
+                    <p class="text-secondary text-center">Пользователь у вас в друзьях</p>
+                {% else %}
+                    <p class="text-secondary text-center">Заявка в друзья отправлена</p>
                 {% endif %}
-                {% if friends %}
-                    <tr><th><a class="link-text" href="/friends/{{profile_user.id}}">Друзей: {{friends_count}}</a><br></th></tr>
-                    <tr><th>
-                    <table>
-                        <tr>
-                            {% for fr in friends %}
-                                <th><a href="/profile/{{fr.id}}"><img class="avatar small" src="{{fr.avatar.url}}"><br>
-                                    <a href="/profile/{{fr.id}}" class="link-text nickname-small">{{fr}}</a></a></th>
-                            {% endfor %}
-                        </tr>
-                    </table></th></tr>
-                {% endif %}
-            </table>
-        </th>
-        {% if posts %}
-            <th>
-                {% include "microblog.html" %}
-            </th>
+            {% endif %}
+            {% if friends %}
+                <div class="container">
+                    <div class="row">
+                        <a class="link-secondary col-8" href="/friends/{{profile_user.id}}">Друзей: {{friends_count}}</a>
+                        {% for fr in friends %}
+                            <div class="col-5">
+                                <a href="/profile/{{fr.id}}" class="link-secondary"><img class="img-fluid m-2" src="{{fr.avatar.url}}"></a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-10">
+        {% if profile_user == user %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-12 mb-2">
+                            <textarea class="form-control" type="text" name="message" placeholder="Че нового"></textarea>
+                        </div>
+                        <div class="col-10">
+                            <input class="form-control" type="file" name="image" id="photo_input">
+                            <img class="img-fluid" id="preview_image">
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-secondary" type="submit" name="action" value="create_post">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         {% endif %}
-    </tr>
-</table>
-{% if profile_user == user %}
-    <img id="preview_image">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" name="message" placeholder="Сообщение">
-        <input id="photo_input" type="file" name="image" style="display: none">
-        <button type="submit" name="action" value="create_post">Отправить</button>
-        <label for="photo_input"><img class="avatar small" src="{% static 'images/image.png' %}"><br>Добавить фото (не больше 10МБ)</label>
-    </form>
-{% endif %}
-<script src="{% static 'js/microblog.js' %}"></script>
+            {% if posts %}
+            {% include "microblog.html" %}
+        {% endif %}
+        </div>
+    </div>
+{#<script src="{% static 'js/microblog.js' %}"></script>#}
 {% endblock %}

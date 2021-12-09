@@ -1,8 +1,3 @@
-window.addEventListener("load", function(){
-    let objDiv = document.getElementById("posts-box");
-    objDiv.scrollTop = objDiv.scrollHeight;
-});
-
 pi = document.getElementById("photo_input")
 pi.addEventListener('change', (event) => {
     if (pi.files && pi.files[0]) {
